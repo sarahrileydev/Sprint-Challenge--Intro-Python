@@ -8,6 +8,9 @@ class City():
     self.lat = lat
     self.lon = lon
 
+  def __repr__(self):
+    return f'{self.name}: ({self.lat},{self.lon})'
+
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
 #
@@ -26,8 +29,14 @@ def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
+    rows = []
     with open('cities.csv') as csvfile:
       csv_reader = csv.reader(csvfile, delimiter=',')
+      for row in csv_reader:
+        rows.append(row)
+      for row in rows[1:]:
+        cities.append(City(row[0], float(row[3]), float(row[4])))
+
     return cities
 
 cityreader(cities)
@@ -66,6 +75,7 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
